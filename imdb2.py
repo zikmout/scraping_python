@@ -13,6 +13,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def getName(url):
+    img = 'simon'
     try:
         html = urlopen(url)
     except HTTPError as e:
@@ -20,15 +21,16 @@ def getName(url):
     try:
         bsObj = BeautifulSoup(html.read())
         name = bsObj.findAll("span", {'itemprop':'name'})
+        img = bsObj.find("td", {'id': 'img_primary'}).img['src']
     except AttributeError as e:
         return None
-    return name
+    return name, img
 
 name = getName('http://www.imdb.com/name/nm0000001/')
 if name == None:
     print("URL NOT FOUNNNNND")
 else:
-    for val in name:
+    for val in name[0]:
         print(bcolors.WARNING + val.get_text() + bcolors.ENDC)
-
+    print(bcolors.OKBLUE +  name[1])
 
