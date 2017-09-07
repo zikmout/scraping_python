@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
+import requests
 
 class bcolors:
     HEADER = '\033[95m'
@@ -33,4 +34,5 @@ else:
     for val in name[0]:
         print(bcolors.WARNING + val.get_text() + bcolors.ENDC)
     print(bcolors.OKBLUE +  name[1])
-
+    testfile = requests.get(name[1], allow_redirects=True)
+    open(str("./imgs/" + val.get_text()) + ".jpg", 'wb').write(testfile.content)
