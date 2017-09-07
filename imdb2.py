@@ -22,17 +22,26 @@ def getName(url):
     try:
         bsObj = BeautifulSoup(html.read())
         name = bsObj.findAll("span", {'itemprop':'name'})
-        img = bsObj.find("td", {'id': 'img_primary'}).img['src']
+        #img = bsObj.find("td", {'id': 'img_primary'})
+        img = bsObj.find("img", {'id': 'name-poster'})
+        if img is None:
+            print("-------------- > IMAGE NOT FOUND !!")
+            return None
+        else:
+            img = bsObj.find("td", {'id': 'img_primary'}).img['src']
+            #img = bsObj.find("img", {'id': 'name-poster'}).img['src']
+        #.img['src']
     except AttributeError as e:
         return None
     return name, img
 
-name = getName('http://www.imdb.com/name/nm0000001/')
-if name == None:
-    print("URL NOT FOUNNNNND")
-else:
-    for val in name[0]:
-        print(bcolors.WARNING + val.get_text() + bcolors.ENDC)
-    print(bcolors.OKBLUE +  name[1])
-    testfile = requests.get(name[1], allow_redirects=True)
-    open(str("./imgs/" + val.get_text()) + ".jpg", 'wb').write(testfile.content)
+for x in range(0, 100):
+    name = getName('http://www.imdb.com/name/nm' + str(x) + '/')
+    if name == None:
+        print("URL NOT FOUNNNNND")
+    else:
+        for val in name[0]:
+            print(bcolors.WARNING + val.get_text() + bcolors.ENDC)
+        print(bcolors.OKBLUE +  str(name[1]))
+        testfile = requests.get(str(name[1]), allow_redirects=True)
+        open(str("./imgs/" + val.get_text()) + ".jpg", 'wb').write(testfile.content)
