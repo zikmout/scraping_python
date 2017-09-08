@@ -54,6 +54,7 @@ def main(argv):
     #https://www.google.co.in/search?q=%22paul%20henreid%22&source=lnms&tbm=isch#imgrc=_
     # Begining scraping phase
 
+    max_images = int(args.nb_images)
     query = args.query
     query = query.split()
     query = '+'.join(query)
@@ -66,8 +67,19 @@ def main(argv):
         ActualImages.append((link, Type))
         #log
         #print(ActualImages)
-
-
+        for i, (img, Type) in enumerate(ActualImages[0:max_images]):
+            try:
+                req = urllib2.Request(img, headers={'User-Agent': header})
+                raw_img = urllib2.urlopen(req).read()
+                if len(Type) == 0:
+                    f = open(os.path.join(save_directory, args.process + "_" + str(i) + ".jpg"), 'wb')
+                else:
+                    f = open(os.path.join(save_directory, args.nb_images + "_" + str(i) + "." + Type), 'wb')
+                f.write(raw_img)
+                f.close()
+            except Exception as e:
+                print("could not load: " + img)
+                print(e)
     #urlretrieve(imageLocation)
 
 if __name__ == '__main__':
