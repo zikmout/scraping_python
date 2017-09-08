@@ -12,6 +12,7 @@ import urllib.request as urllib2
 
 from bs4 import BeautifulSoup
 import json
+import base64
 
 def main(argv):
 
@@ -70,7 +71,8 @@ def main(argv):
         for i, (img, Type) in enumerate(ActualImages[0:max_images]):
             try:
                 req = urllib2.Request(img, headers={'User-Agent': header})
-                raw_img = urllib2.urlopen(req).read()
+                encoded_req = base64.b64encode(req.encode())
+                raw_img = urllib2.urlopen(encoded_req).read()
                 if len(Type) == 0:
                     f = open(os.path.join(save_directory, args.process + "_" + str(i) + ".jpg"), 'wb')
                 else:

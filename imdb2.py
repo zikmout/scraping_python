@@ -35,7 +35,7 @@ def getName(url):
         return None
     return name, img
 
-for x in range(9550, 500000):
+for x in range(37240, 500000):
     name = getName('http://www.imdb.com/name/nm' + str(x) + '/')
     if name == None:
         print("URL NOT FOUNNNNND")
