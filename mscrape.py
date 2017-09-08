@@ -11,18 +11,19 @@ def main(argv):
     on research purpose only.
     ---------------------------------
     '''
-    print(textwrap.dedent(desc))
     parser = argparse.ArgumentParser()
-    parser = argparse.ArgumentParser(description='Lists collected actors/actress ...')
-    parser.add_argument('--process')
+    #parser = argparse.ArgumentParser(description='Lists collected actors/actress ...')
+    parser.add_argument('--process', help='Counts the number and process the celebrities')
+    parser.add_argument('--verbose', help='verbose mode.', action='store_true')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0', help='prints out the version.')
     args = parser.parse_args()
-    parser = argparse.ArgumentParser(
-            prog='MPARSE',
-            epilog='''The idea is to collect faces from famous personalities from the IMDB Database.''',
-            formatter_class=argparse.RawDescriptionHelpFormatter,
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
             description=textwrap.dedent(desc))
-    #parser.print_help()
+            #epilog='''The idea is to collect faces from famous personalities from the IMDB Database.''',
+            #formatter_class=argparse.RawDescriptionHelpFormatter,
+    parser.print_help()
 
+    #dirname = args[0]
     #print("Option chosen was: %s" % args[0])
 
 if __name__ == '__main__':
